@@ -4,8 +4,7 @@ from user.forms import UserForm, LoginForm, RegisterForm
 from django.http import HttpResponseNotFound
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.views.decorators.csrf import csrf_protect
 
 
 User = get_user_model() 
@@ -85,26 +84,29 @@ def login_page(request):
             user = authenticate(request, email=email, password=password)
             if user:
                 login(request, user)
-                return redirect('ecommerce:''')
+                return redirect('ecommerce:product_list')
             else:
                 messages.add_message(request, messages.ERROR, 'Invalid login')
     context = {
         'form': form
     }
-    return render(request, 'users/login.html', context=context)
-
+    return render(request, 'user/login.html', context=context)
 
 def logout_page(request):
     logout(request)
-    return redirect('user:logout')
+    return render(request, 'user/logout.html')
 
-# user/views.py
 
 def register(request):
     form = RegisterForm()
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('some_success_url')
+            user = form.save()
+            login(request, user)  # Automatically log in the user after registration
+            messages.success(request, 'Registration successful!')
+            return redirect('ecommerce:product_list') 
+        else:
+            messages.error(request, 'Registration failed. Please correct the errors below.')
+
     return render(request, 'user/register.html', {'form': form})

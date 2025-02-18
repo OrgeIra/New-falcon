@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
@@ -72,7 +73,7 @@
           }
         </script>
         <div class="row flex-center min-vh-100 py-6">
-          <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4"><a class="d-flex flex-center mb-4" href="../../../index.html"><img class="me-2" src="../../../assets/img/icons/spot-illustrations/falcon.png" alt="" width="58" /><span class="font-sans-serif fw-bolder fs-5 d-inline-block">falcon</span></a>
+          <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4"><a class="d-flex flex-center mb-4" href="../../../index.html"><img class="me-2" src="{% static "assets/img/icons/spot-illustrations/falcon.png" %}" alt="" width="58" /><span class="font-sans-serif fw-bolder fs-5 d-inline-block">falcon</span></a>
             <div class="card">
               <div class="card-body p-4 p-sm-5">
                 <div class="row flex-between-center mb-2">
@@ -81,29 +82,40 @@
                   </div>
                   <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">Have an account?</span> <span><a href="../../../pages/authentication/simple/login.html">Login</a></span></div>
                 </div>
-                <form>
+                <form method="POST">
+                  {% csrf_token %}
                   <div class="mb-3">
-                    <input class="form-control" type="text" autocomplete="on" placeholder="Name" />
+                      <input class="form-control" type="text" name="username" autocomplete="on" placeholder="Name" required />
                   </div>
                   <div class="mb-3">
-                    <input class="form-control" type="email" autocomplete="on" placeholder="Email address" />
+                      <input class="form-control" type="email" name="email" autocomplete="on" placeholder="Email address" required />
                   </div>
                   <div class="row gx-2">
-                    <div class="mb-3 col-sm-6">
-                      <input class="form-control" type="password" autocomplete="on" placeholder="Password" />
-                    </div>
-                    <div class="mb-3 col-sm-6">
-                      <input class="form-control" type="password" autocomplete="on" placeholder="Confirm Password" />
-                    </div>
+                      <div class="mb-3 col-sm-6">
+                          <input class="form-control" type="password" name="password" autocomplete="on" placeholder="Password" required />
+                      </div>
+                      <div class="mb-3 col-sm-6">
+                          <input class="form-control" type="password" name="confirm_password" autocomplete="on" placeholder="Confirm Password" required />
+                      </div>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="basic-register-checkbox" />
-                    <label class="form-label" for="basic-register-checkbox">I accept the <a href="#!">terms </a>and <a href="#!">privacy policy</a></label>
+                      <input class="form-check-input" type="checkbox" id="basic-register-checkbox" required />
+                      <label class="form-label" for="basic-register-checkbox">
+                          I accept the <a href="#">terms</a> and <a href="#">privacy policy</a>
+                      </label>
                   </div>
                   <div class="mb-3">
-                    <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Register</button>
+                      <button class="btn btn-primary d-block w-100 mt-3" type="submit">Register</button>
                   </div>
                 </form>
+              
+              
+              {% if messages %}
+                  {% for message in messages %}
+                      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                  {% endfor %}
+              {% endif %}
+              
                 <div class="position-relative mt-4">
                   <hr class="bg-300" />
                   <div class="divider-content-center">or register with</div>
@@ -138,17 +150,17 @@
           <div class="row gx-2">
             <div class="col-6">
               <input class="btn-check" id="themeSwitcherLight" name="theme-color" type="radio" value="light" data-theme-control="theme" />
-              <label class="btn d-inline-block btn-navbar-style fs--1" for="themeSwitcherLight"> <span class="hover-overlay mb-2 rounded d-block"><img class="img-fluid img-prototype mb-0" src="../../../assets/img/generic/falcon-mode-default.jpg" alt=""/></span><span class="label-text">Light</span></label>
+              <label class="btn d-inline-block btn-navbar-style fs--1" for="themeSwitcherLight"> <span class="hover-overlay mb-2 rounded d-block"><img class="img-fluid img-prototype mb-0" src="{% static "assets/img/generic/falcon-mode-default.jpg" %}" alt=""/></span><span class="label-text">Light</span></label>
             </div>
             <div class="col-6">
               <input class="btn-check" id="themeSwitcherDark" name="theme-color" type="radio" value="dark" data-theme-control="theme" />
-              <label class="btn d-inline-block btn-navbar-style fs--1" for="themeSwitcherDark"> <span class="hover-overlay mb-2 rounded d-block"><img class="img-fluid img-prototype mb-0" src="../../../assets/img/generic/falcon-mode-dark.jpg" alt=""/></span><span class="label-text"> Dark</span></label>
+              <label class="btn d-inline-block btn-navbar-style fs--1" for="themeSwitcherDark"> <span class="hover-overlay mb-2 rounded d-block"><img class="img-fluid img-prototype mb-0" src="{% static "assets/img/generic/falcon-mode-dark.jpg" %}" alt=""/></span><span class="label-text"> Dark</span></label>
             </div>
           </div>
         </div>
         <hr />
         <div class="d-flex justify-content-between">
-          <div class="d-flex align-items-start"><img class="me-2" src="../../../assets/img/icons/left-arrow-from-left.svg" width="20" alt="" />
+          <div class="d-flex align-items-start"><img class="me-2" src="{% static "assets/img/icons/left-arrow-from-left.svg" %}" width="20" alt="" />
             <div class="flex-1">
               <h5 class="fs-0">RTL Mode</h5>
               <p class="fs--1 mb-0">Switch your language direction </p><a class="fs--1" href="../../../documentation/customization/configuration.html">RTL Documentation</a>
@@ -160,7 +172,7 @@
         </div>
         <hr />
         <div class="d-flex justify-content-between">
-          <div class="d-flex align-items-start"><img class="me-2" src="../../../assets/img/icons/arrows-h.svg" width="20" alt="" />
+          <div class="d-flex align-items-start"><img class="me-2" src="{% static "assets/img/icons/arrows-h.svg" %}" width="20" alt="" />
             <div class="flex-1">
               <h5 class="fs-0">Fluid Layout</h5>
               <p class="fs--1 mb-0">Toggle container layout system </p><a class="fs--1" href="../../../documentation/customization/configuration.html">Fluid Documentation</a>
@@ -171,7 +183,7 @@
           </div>
         </div>
         <hr />
-        <div class="d-flex align-items-start"><img class="me-2" src="../../../assets/img/icons/paragraph.svg" width="20" alt="" />
+        <div class="d-flex align-items-start"><img class="me-2" src="{% static "assets/img/icons/paragraph.svg" %}" width="20" alt="" />
           <div class="flex-1">
             <h5 class="fs-0 d-flex align-items-center">Navigation Position </h5>
             <p class="fs--1 mb-2">Select a suitable navigation system for your web application </p>
@@ -199,23 +211,23 @@
           <div class="row gx-2">
             <div class="col-6">
               <input class="btn-check" id="navbar-style-transparent" type="radio" name="navbarStyle" value="transparent" data-theme-control="navbarStyle" />
-              <label class="btn d-block w-100 btn-navbar-style fs--1" for="navbar-style-transparent"> <img class="img-fluid img-prototype" src="../../../assets/img/generic/default.png" alt="" /><span class="label-text"> Transparent</span></label>
+              <label class="btn d-block w-100 btn-navbar-style fs--1" for="navbar-style-transparent"> <img class="img-fluid img-prototype" src="{% static "assets/img/generic/default.png" %}" alt="" /><span class="label-text"> Transparent</span></label>
             </div>
             <div class="col-6">
               <input class="btn-check" id="navbar-style-inverted" type="radio" name="navbarStyle" value="inverted" data-theme-control="navbarStyle" />
-              <label class="btn d-block w-100 btn-navbar-style fs--1" for="navbar-style-inverted"> <img class="img-fluid img-prototype" src="../../../assets/img/generic/inverted.png" alt="" /><span class="label-text"> Inverted</span></label>
+              <label class="btn d-block w-100 btn-navbar-style fs--1" for="navbar-style-inverted"> <img class="img-fluid img-prototype" src="{% static "assets/img/generic/inverted.png" %}" alt="" /><span class="label-text"> Inverted</span></label>
             </div>
             <div class="col-6">
               <input class="btn-check" id="navbar-style-card" type="radio" name="navbarStyle" value="card" data-theme-control="navbarStyle" />
-              <label class="btn d-block w-100 btn-navbar-style fs--1" for="navbar-style-card"> <img class="img-fluid img-prototype" src="../../../assets/img/generic/card.png" alt="" /><span class="label-text"> Card</span></label>
+              <label class="btn d-block w-100 btn-navbar-style fs--1" for="navbar-style-card"> <img class="img-fluid img-prototype" src="{% static "assets/img/generic/card.png" %}" alt="" /><span class="label-text"> Card</span></label>
             </div>
             <div class="col-6">
               <input class="btn-check" id="navbar-style-vibrant" type="radio" name="navbarStyle" value="vibrant" data-theme-control="navbarStyle" />
-              <label class="btn d-block w-100 btn-navbar-style fs--1" for="navbar-style-vibrant"> <img class="img-fluid img-prototype" src="../../../assets/img/generic/vibrant.png" alt="" /><span class="label-text"> Vibrant</span></label>
+              <label class="btn d-block w-100 btn-navbar-style fs--1" for="navbar-style-vibrant"> <img class="img-fluid img-prototype" src="{% static "assets/img/generic/vibrant.png" %}" alt="" /><span class="label-text"> Vibrant</span></label>
             </div>
           </div>
         </div>
-        <div class="text-center mt-5"><img class="mb-4" src="../../../assets/img/icons/spot-illustrations/47.png" alt="" width="120" />
+        <div class="text-center mt-5"><img class="mb-4" src="{% static "assets/img/icons/spot-illustrations/47.png" %}" alt="" width="120" />
           <h5>Like What You See?</h5>
           <p class="fs--1">Get Falcon now and create beautiful dashboards with hundreds of widgets.</p><a class="mb-3 btn btn-primary" href="https://themes.getbootstrap.com/product/falcon-admin-dashboard-webapp-template/" target="_blank">Purchase</a>
         </div>
@@ -235,15 +247,15 @@
     <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
-    <script src="../../../vendors/popper/popper.min.js"></script>
-    <script src="../../../vendors/bootstrap/bootstrap.min.js"></script>
-    <script src="../../../vendors/anchorjs/anchor.min.js"></script>
-    <script src="../../../vendors/is/is.min.js"></script>
-    <script src="../../../vendors/fontawesome/all.min.js"></script>
-    <script src="../../../vendors/lodash/lodash.min.js"></script>
+    <script src="{% static "vendors/popper/popper.min.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/bootstrap.min.js" %}"></script>
+    <script src="{% static "vendors/anchorjs/anchor.min.js" %}"></script>
+    <script src="{% static "vendors/is/is.min.js" %}"></script>
+    <script src="{% static "vendors/fontawesome/all.min.js" %}"></script>
+    <script src="{% static "vendors/lodash/lodash.min.js" %}"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-    <script src="../../../vendors/list.js/list.min.js"></script>
-    <script src="../../../assets/js/theme.js"></script>
+    <script src="{% static "vendors/list.js/list.min.js" %}"></script>
+    <script src="{% static "assets/js/theme.js" %}"></script>
 
   </body>
 

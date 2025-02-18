@@ -258,7 +258,7 @@
                       </a>
                       <!-- more inner pages-->
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="{% url "user:customer-details" user.pk%}" aria-expanded="false">
+                    <li class="nav-item"><a class="nav-link" href="{% url "user:customer-details" 1%}" aria-expanded="false">
                         <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Customer details</span>
                         </div>
                       </a>
@@ -1723,7 +1723,7 @@
 
                     <div class="dropdown-divider"></div>
                     {% comment %} <a class="dropdown-item" href="../../../pages/user/settings.html">Settings</a> {% endcomment %}
-                    <a class="dropdown-item" href="../../../pages/authentication/card/logout.html">Logout</a>
+                    <a class="dropdown-item" href="{% url "user:logout" %}">Logout</a>
                   </div>
                 </div>
               </li>

@@ -77,36 +77,38 @@
               <div class="card-body p-4 p-sm-5">
                 <div class="row flex-between-center mb-2">
                   <div class="col-auto">
-                    <form method="POST">
-                      {% csrf_token %}
-                      {{ form.as_p }}
-                      <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Log in</button>
-                    </form>
-                  
-                    
+                    <h5>Log in</h5>
                   </div>
-                  <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">or</span> <span><a href="../../../pages/authentication/simple/register.html">Create an account</a></span></div>
+                  <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">or</span> <span><a href="{% url "user:register" %}">Create an account</a></span></div>
                 </div>
-                <form>
+                <form method="POST">
+                  {% csrf_token %}
                   <div class="mb-3">
-                    <input class="form-control" type="email" placeholder="Email address" />
+                      {{ form.email }}
                   </div>
                   <div class="mb-3">
-                    <input class="form-control" type="password" placeholder="Password" />
+                      {{ form.password }}
                   </div>
                   <div class="row flex-between-center">
-                    <div class="col-auto">
-                      <div class="form-check mb-0">
-                        <input class="form-check-input" type="checkbox" id="basic-checkbox" checked="checked" />
-                        <label class="form-check-label mb-0" for="basic-checkbox">Remember me</label>
+                      <div class="col-auto">
+                          <div class="form-check mb-0">
+                              <input class="form-check-input" type="checkbox" id="basic-checkbox" checked="checked" />
+                              <label class="form-check-label mb-0" for="basic-checkbox">Remember me</label>
+                          </div>
                       </div>
-                    </div>
-                    <div class="col-auto"><a class="fs--1" href="../../../pages/authentication/simple/forgot-password.html">Forgot Password?</a></div>
+                       <div class="col-auto"><a class="fs--1" href="#"{% comment %}{% url 'password_reset' %} {% endcomment %}>Forgot Password?</a></div>
                   </div>
                   <div class="mb-3">
-                    <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Log in</button>
+                      <button class="btn btn-primary d-block w-100 mt-3" type="submit">Log in</button>
                   </div>
                 </form>
+              {% if messages %}
+                  {% for message in messages %}
+                      <div class="alert alert-danger">{{ message }}</div>
+                  {% endfor %}
+              {% endif %}
+              
+                
                 <div class="position-relative mt-4">
                   <hr class="bg-300" />
                   <div class="divider-content-center">or log in with</div>
