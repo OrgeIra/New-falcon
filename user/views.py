@@ -110,3 +110,16 @@ def register(request):
             messages.error(request, 'Registration failed. Please correct the errors below.')
 
     return render(request, 'user/register.html', {'form': form})
+
+
+
+from django.core.mail import send_mail
+
+def send_email(request):
+    send_mail(
+        'Test email',
+        'I am Abdusami and I am testing the email sending functionality',
+        'dodomatovabdusami@gmail.com',
+        ['dodomatovabdusami0@gmail.com'],
+        fail_silently=False,
+    )

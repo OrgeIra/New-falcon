@@ -78,8 +78,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'falcon',
+        'USER': 'postgres',
+        'PASSWORD': '16022005',
+        "HOST": "localhost",
+        "PORT": "5432",
+
     }
 }
 
@@ -137,4 +142,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.User'
 
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'dodomatovabdusami@gmail.com'
+EMAIL_HOST_PASSWORD = 'abdusami1602@'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 123Qwe!@#
+
+
+#python manage.py dumpdata --indent 2 --exclude auth.User > data.json
