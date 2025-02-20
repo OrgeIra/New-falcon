@@ -1,43 +1,43 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormMixin
+from django.core.paginator import Paginator
 from .forms import ReviewForm
 from ecommerce.models import Product, ProductAttribute
-from django.core.paginator import Paginator
 
 
+class ProductListView(ListView):
+    model = Product
+    template_name = "e-commerce/product/product-list.html"
+    context_object_name = "page_obj"
+    paginate_by = 1  # Items per page
 
-def product_list(request):
-    products = Product.objects.all()
-
-    paginator = Paginator(products, 1)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-    context = {
-        'page_obj': page_obj,
-    }
-    return render(request, "e-commerce/product/product-list.html", context=context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_obj"] = self.get_queryset()  # Ensure pagination
+        return context
 
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    product_attributes = ProductAttribute.objects.filter(product=product)
-    reviews = product.reviews.all()
+class ProductDetailView(FormMixin, DetailView):
+    model = Product
+    template_name = "e-commerce/product/product-details.html"
+    context_object_name = "product"
+    form_class = ReviewForm
 
-    if request.method == "POST":
-        form = ReviewForm(request.POST)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.get_object()
+        context["product_attributes"] = ProductAttribute.objects.filter(product=product)
+        context["reviews"] = product.reviews.all()
+        context["form"] = self.get_form()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
         if form.is_valid():
             review = form.save(commit=False)
-            review.product = product
+            review.product = self.object
             review.save()
-            return redirect("ecommerce:product_detail", pk=pk)
-
-    else:
-        form = ReviewForm()
-
-    context = {
-        "product": product,
-        "product_attributes": product_attributes,
-        "reviews": reviews,
-        "form": form,
-    }
-
-    return render(request, "e-commerce/product/product-details.html", context)
+            return redirect("ecommerce:product_detail", pk=self.object.pk)
+        return self.get(request, *args, **kwargs)

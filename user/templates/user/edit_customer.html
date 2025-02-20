@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1>Edit Customer</h1>
-        <form method="post" action="{% url 'users:customer_update' user.pk %}">
+        <form method="post" action="{% url 'user:update-customer' user.pk %}">
             {% csrf_token %}
             <div class="form-group">
                 <label for="first_name">Name:</label>

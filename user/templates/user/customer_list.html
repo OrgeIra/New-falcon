@@ -62,15 +62,15 @@
                             </div>
                           </div>
                         </a></td>
-                      <td class="email align-middle py-2"><a href="mailto:ricky@example.com">{{user.email}}</a></td>
-                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:2012001851">{{user.phone}}</a></td>
+                      <td class="email align-middle py-2"><a href="mailto:ricky@example.com">{{ user.email }}</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:2012001851">{{ user.phone }}</a></td>
                       <td class="address align-middle white-space-nowrap ps-5 py-2">{{ user.address }}</td>
                       <td class="joined align-middle py-2">{{ user.created_at }}</td>
                       <td class="align-middle white-space-nowrap py-2 text-end">
                         <div class="dropdown font-sans-serif position-static">
                           <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
                           <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
-                            <div class="bg-white py-2"><a class="dropdown-item" href="{% url "user:customer-update" user.pk %}">Edit</a><a class="dropdown-item text-danger" href="{% url "user:delete-customer" user.pk %}">Delete</a></div>
+                            <div class="bg-white py-2"><a class="dropdown-item" href="{% url "user:update-customer" user.pk %}">Edit</a><a class="dropdown-item text-danger" href="{% url "user:delete-customer" user.pk %}">Delete</a></div>
                           </div>
                         </div>
                       </td>
