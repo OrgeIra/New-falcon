@@ -39,7 +39,7 @@ class UpdateCustomerView(LoginRequiredMixin, UpdateView):
         return reverse_lazy("user:customer-details", kwargs={"pk": self.object.pk})
 
 
-# Delete Customer
+
 class DeleteCustomerView(LoginRequiredMixin, DeleteView):
     model = User
     template_name = "user/delete_customer.html"
@@ -52,7 +52,7 @@ class DeleteCustomerView(LoginRequiredMixin, DeleteView):
         return super().get(request, *args, **kwargs)
 
 
-# Login View
+
 class LoginPageView(FormView):
     template_name = "user/login.html"
     form_class = LoginForm
@@ -69,7 +69,6 @@ class LoginPageView(FormView):
             return self.form_invalid(form)
 
 
-# Logout View
 class LogoutPageView(LoginRequiredMixin, ListView):
     template_name = "user/logout.html"
 
@@ -78,7 +77,6 @@ class LogoutPageView(LoginRequiredMixin, ListView):
         return super().get(request, *args, **kwargs)
 
 
-# Register View
 class RegisterView(FormView):
     template_name = "user/register.html"
     form_class = RegisterForm

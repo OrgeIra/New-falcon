@@ -10,11 +10,11 @@ class ProductListView(ListView):
     model = Product
     template_name = "e-commerce/product/product-list.html"
     context_object_name = "page_obj"
-    paginate_by = 1  # Items per page
+    paginate_by = 1  
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["page_obj"] = self.get_queryset()  # Ensure pagination
+        context["page_obj"] = self.get_queryset() 
         return context
 
 
