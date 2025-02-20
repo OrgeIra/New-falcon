@@ -8,12 +8,11 @@ from django.core.paginator import Paginator
 def product_list(request):
     products = Product.objects.all()
 
-    paginator = Paginator(products, 5)
+    paginator = Paginator(products, 1)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     context = {
         'page_obj': page_obj,
-        "products": products,
     }
     return render(request, "e-commerce/product/product-list.html", context=context)
 

@@ -123,3 +123,11 @@ def send_email(request):
         ['dodomatovabdusami0@gmail.com'],
         fail_silently=False,
     )
+
+send_mail(
+    'Test Subject',
+    'This is a test email from Django.',
+    'dodomatovabdusami@example.com',
+    ['jm1495046@gmail.com'],
+    fail_silently=False,
+)
