@@ -151,11 +151,14 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
 
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOAuth2',
+]
 
 
-
-
-
+LOGOUT_REDIRECT_URL = "user:login"
+LOGIN_URL = "user:login"
 
 
 

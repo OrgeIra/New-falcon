@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserForm, LoginForm, RegisterForm
 
 
+
 User = get_user_model()
 
 
@@ -69,12 +70,11 @@ class LoginPageView(FormView):
             return self.form_invalid(form)
 
 
-class LogoutPageView(LoginRequiredMixin, ListView):
-    template_name = "user/logout.html"
 
-    def get(self, request, *args, **kwargs):
-        logout(request)
-        return super().get(request, *args, **kwargs)
+    
+def custom_logout(request):
+    logout(request)
+    return redirect(reverse("user:login"))
 
 
 class RegisterView(FormView):
@@ -83,7 +83,7 @@ class RegisterView(FormView):
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)  # Auto login after registration
+        login(self.request, user, backends = 'djangi.contrib.auth.backends.ModelsDackend') 
         messages.success(self.request, "Registration successful!")
         return redirect("ecommerce:product_list")
 
@@ -92,13 +92,16 @@ class RegisterView(FormView):
         return super().form_invalid(form)
 
 
+
+
+
 from django.core.mail import send_mail
 
 def send_email(request):
     send_mail(
         'Test email',
         'I am Abdusami and I am testing the email sending functionality',
-        'dodomatovabdusami@gmail.com',
+        'DEFAULT_FROM_EMAIL',
         ['dodomatovabdusami0@gmail.com'],
         fail_silently=False,
     )

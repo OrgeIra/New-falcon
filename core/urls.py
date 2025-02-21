@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('ecommerce.urls')), 
     path('user/', include('user.urls', namespace='user')),
+    path('social-auth/',include('social_django.urls', namespace='social')),
     
 ]
 
