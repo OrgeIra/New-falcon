@@ -82,7 +82,7 @@
                   </div>
                   <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">Have an account?</span> <span><a href="../../../pages/authentication/simple/login.html">Login</a></span></div>
                 </div>
-                <form method="POST">
+                <form method="POST" action="{% url 'user:register_page' %}">
                   {% csrf_token %}
                   <div class="mb-3">
                       <input class="form-control" type="text" name="username" autocomplete="on" placeholder="Name" required />
@@ -256,6 +256,12 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <script src="{% static "vendors/list.js/list.min.js" %}"></script>
     <script src="{% static "assets/js/theme.js" %}"></script>
+    <script>
+      function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+      }
+    </script>
+    
 
   </body>
 

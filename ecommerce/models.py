@@ -23,6 +23,7 @@ class Product(BaseModel):
         FIVE = 5
 
     name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, default="")
     about = models.CharField(max_length=1000, default="No description available")
     description = models.TextField(default="No description available")
     price = models.DecimalField(max_digits=14, decimal_places=2)

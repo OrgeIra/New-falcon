@@ -32,7 +32,8 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.ModelForm):
     email = forms.EmailField(required=True)
     username = forms.CharField(max_length=150, required=False)
-    confirm_password = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    confirm_password = forms.CharField(widget=forms.PasswordInput, required=True)
 
     class Meta:
         model = User
@@ -40,19 +41,19 @@ class RegisterForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if email is None:
-            raise forms.ValidationError('Email can not be None')
+        if not email:
+            raise forms.ValidationError('Email cannot be None')
 
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError(f'This {email} is already registered')
+            raise forms.ValidationError(f'This email {email} is already registered')
         return email
 
-   
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
 
-        if password != confirm_password:
-            raise forms.ValidationError('do not match')
+        if password and confirm_password and password != confirm_password:
+            raise forms.ValidationError('Passwords do not match')
+
         return cleaned_data
